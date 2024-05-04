@@ -53,3 +53,11 @@ def max_tree_timed(img, params, maxtree_class):
 
 def build_max_tree(img, params, maxtree_class=maxtree.OriginalMaxTree):
     return time_function(max_tree_timed, (img, params, maxtree_class), params.verbosity, 'create max tree')
+
+def biggest_map(image, id_map, biggest):
+    big_map = np.zeros(image.shape) -1
+    for i in range(len(id_map)):
+        for j in range(len(id_map[i])):
+            if id_map[i][j] == biggest:
+                big_map[i][j] = biggest
+    return big_map
