@@ -45,11 +45,6 @@ def get_attributes(mto_struct, tree : MaxTree, object_id):
         V_prev = atts.volume
         area = node.area
         V = atts.volume + I * node.area
-        
-        if V >= V_tot / 2:
-            R_e = R
-            V_e = V
-            I_e = I
 
         xs.append(R)
         ys.append(V)
@@ -68,13 +63,17 @@ def get_attributes(mto_struct, tree : MaxTree, object_id):
     print('I', I, 'V_e', V_e, 'I_e', I_e)
     while object_id != -1:
         R = sqrt(tree.nodes[object_id].area * PI_DIV)
-        L = sersic_luminosity(tree, object_id, n, R_e, I_e) * 4000
+        L = sersic_luminosity(tree, object_id, n, R_e, I_e)
         I = sersic_intensity (n, R, R_e, I_e)
         zs.append(L)
         zsi.append(I)
         object_id = one_up(mto_struct, object_id)
     
     xs0 = [R / R_e for R in xs]
+
+    plt.plot(xs0, ys)
+    plt.plot(xs0, zs)
+    plt.show()
 
     plt.plot(xs0, ysi)
     plt.plot(xs0, zsi)
@@ -94,7 +93,9 @@ def get_attributes(mto_struct, tree : MaxTree, object_id):
     plt.plot(xs0, [log(z) for z in zsi])
     plt.show()
 
-    popt, _ = curve_fit(formula, xs, ysi, bounds=(0,12))
+    cnt = sum([x >= 1 for x in xs0])
+
+    popt, _ = curve_fit(formula, xs[:cnt], ysi[:cnt], bounds=(0,12))
     n_fit = popt[0]
     print('n_fit =', n_fit)
     sersic_fit = formula(xs, n_fit)
