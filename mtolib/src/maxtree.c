@@ -182,7 +182,6 @@ static void node_axes(mt_data* mt, INT_TYPE node_index)
   FLOAT_TYPE mean_y = attr->y * area_div;
 
   // Compute covariances
-  FLOAT_TYPE correction = node->area / 12;
   FLOAT_TYPE cov_xx = attr->xx * area_div - mean_x * mean_x;
   FLOAT_TYPE cov_yy = attr->yy * area_div - mean_y * mean_y;
   FLOAT_TYPE cov_xy = attr->xy * area_div - mean_x * mean_y;

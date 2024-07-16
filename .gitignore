@@ -1,4 +1,12 @@
 .idea/
+gals/
+img/
+parameters.csv
+out.png
+cluster1.fits
+template.fits
+mock/cluster35.fits
+*.DS_Store
 
 *.7z
 *.fits
